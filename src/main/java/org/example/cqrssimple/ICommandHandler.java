@@ -1,7 +1,7 @@
 package org.example.cqrssimple;
 
-public interface ICommandHandler {
-    void handle(Command command);
+public interface ICommandHandler<T extends Command> {
+    void handle(T command);
 
     boolean accept(Command command);
 }
