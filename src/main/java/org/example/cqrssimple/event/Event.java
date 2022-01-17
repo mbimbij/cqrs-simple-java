@@ -1,4 +1,6 @@
-package org.example.cqrssimple;
+package org.example.cqrssimple.event;
+
+import org.example.cqrssimple.Message;
 
 import java.util.UUID;
 

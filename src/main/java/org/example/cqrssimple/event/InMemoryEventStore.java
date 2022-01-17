@@ -1,6 +1,7 @@
-package org.example.cqrssimple;
+package org.example.cqrssimple.event;
 
 import lombok.Getter;
+import org.example.cqrssimple.domain.IEventStore;
 
 import java.util.ArrayList;
 import java.util.List;

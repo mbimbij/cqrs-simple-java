@@ -1,4 +1,4 @@
-package org.example.cqrssimple;
+package org.example.cqrssimple.command;
 
 import lombok.EqualsAndHashCode;
 import lombok.Value;

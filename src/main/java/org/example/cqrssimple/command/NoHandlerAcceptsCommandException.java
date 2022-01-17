@@ -1,4 +1,4 @@
-package org.example.cqrssimple;
+package org.example.cqrssimple.command;
 
 public class NoHandlerAcceptsCommandException extends RuntimeException {
     private Command unhandledCommand;

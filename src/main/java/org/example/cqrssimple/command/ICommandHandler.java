@@ -1,4 +1,4 @@
-package org.example.cqrssimple;
+package org.example.cqrssimple.command;
 
 public interface ICommandHandler<T extends Command> {
     void handle(T command);

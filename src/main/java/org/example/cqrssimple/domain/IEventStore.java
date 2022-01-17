@@ -1,4 +1,6 @@
-package org.example.cqrssimple;
+package org.example.cqrssimple.domain;
+
+import org.example.cqrssimple.event.Event;
 
 import java.util.List;
 

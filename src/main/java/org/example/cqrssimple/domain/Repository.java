@@ -1,6 +1,7 @@
-package org.example.cqrssimple;
+package org.example.cqrssimple.domain;
 
 import lombok.RequiredArgsConstructor;
+import org.example.cqrssimple.event.Event;
 
 import java.util.List;
 
@@ -9,7 +10,7 @@ public class Repository {
     private final IEventStore eventStore;
     private final IEventPublisher eventPublisher;
 
-    void save(InventoryItem inventoryItem) {
+    public void save(InventoryItem inventoryItem) {
         List<Event> uncommittedChanges = inventoryItem.getUncommittedChanges();
         eventStore.store(uncommittedChanges);
         eventPublisher.publish(uncommittedChanges);

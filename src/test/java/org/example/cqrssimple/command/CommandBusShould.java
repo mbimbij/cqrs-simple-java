@@ -1,5 +1,9 @@
-package org.example.cqrssimple;
+package org.example.cqrssimple.command;
 
+import org.example.cqrssimple.domain.IEventPublisher;
+import org.example.cqrssimple.event.InMemoryEventStore;
+import org.example.cqrssimple.event.ItemCreatedEvent;
+import org.example.cqrssimple.domain.Repository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
