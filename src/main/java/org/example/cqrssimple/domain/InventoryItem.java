@@ -1,6 +1,7 @@
 package org.example.cqrssimple.domain;
 
 import org.example.cqrssimple.event.Event;
+import org.example.cqrssimple.event.ItemCheckedInEvent;
 import org.example.cqrssimple.event.ItemCreatedEvent;
 
 import java.util.ArrayList;
@@ -10,7 +11,12 @@ import java.util.UUID;
 public class InventoryItem {
     private final UUID uuid;
     private String name;
+    private int quantity = 0;
     private List<Event> uncommittedChanges = new ArrayList<>();
+
+    public InventoryItem(UUID uuid) {
+        this.uuid = uuid;
+    }
 
     public InventoryItem(UUID uuid, String name) {
         this.uuid = uuid;
@@ -22,7 +28,12 @@ public class InventoryItem {
         return uncommittedChanges;
     }
 
-    public void setUncommittedChanges(List<Event> uncommittedChanges) {
-        this.uncommittedChanges = uncommittedChanges;
+    public void apply(ItemCreatedEvent itemCreatedEvent) {
+        this.name = itemCreatedEvent.getItemName();
+    }
+
+    public void checkIn(int quantity) {
+        this.quantity += quantity;
+        this.uncommittedChanges.add(new ItemCheckedInEvent(this.uuid, quantity));
     }
 }

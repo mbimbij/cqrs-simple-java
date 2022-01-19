@@ -7,11 +7,11 @@ import java.util.UUID;
 
 @EqualsAndHashCode(callSuper = true)
 @Value
-public class CreateItemCommand extends Command {
-    String itemName;
+public class CheckInItemCommand extends Command {
+    int quantity;
 
-    public CreateItemCommand(UUID uuid, String itemName) {
+    public CheckInItemCommand(UUID uuid, int quantity) {
         super(uuid);
-        this.itemName = itemName;
+        this.quantity = quantity;
     }
 }

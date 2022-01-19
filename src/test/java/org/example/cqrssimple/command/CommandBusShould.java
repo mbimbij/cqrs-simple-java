@@ -1,9 +1,10 @@
 package org.example.cqrssimple.command;
 
 import org.example.cqrssimple.domain.IEventPublisher;
-import org.example.cqrssimple.event.InMemoryEventStore;
-import org.example.cqrssimple.event.ItemCreatedEvent;
 import org.example.cqrssimple.domain.Repository;
+import org.example.cqrssimple.event.InMemoryEventStore;
+import org.example.cqrssimple.event.ItemCheckedInEvent;
+import org.example.cqrssimple.event.ItemCreatedEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -145,11 +146,31 @@ public class CommandBusShould {
             // GIVEN
             String itemName = "item name";
             UUID uuid = UUID.randomUUID();
-            CreateItemCommand createItemCommand = new CreateItemCommand(uuid, itemName);
             ItemCreatedEvent expectedEvent = new ItemCreatedEvent(uuid, itemName);
 
             // WHEN
-            commandBus.send(createItemCommand);
+            commandBus.send(new CreateItemCommand(uuid, itemName));
+
+            // THEN
+            assertThat(inMemoryEventStore.getEvents()).contains(expectedEvent);
+            verify(eventPublisher).publish(eq(List.of(expectedEvent)));
+        }
+    }
+
+    @Nested
+    public class CheckInItem {
+        @Test
+        void saveAndPublishEvent_whenCheckInItemCommandSent() {
+            // GIVEN
+            commandBus.registerHandler(new CheckInItemCommandHandler(repository));
+            String itemName = "item name";
+            UUID uuid = UUID.randomUUID();
+            int quantity = 2;
+            inMemoryEventStore.store(List.of(new ItemCreatedEvent(uuid, itemName)));
+            ItemCheckedInEvent expectedEvent = new ItemCheckedInEvent(uuid, quantity);
+
+            // WHEN
+            commandBus.send(new CheckInItemCommand(uuid, quantity));
 
             // THEN
             assertThat(inMemoryEventStore.getEvents()).contains(expectedEvent);
