@@ -1,6 +1,7 @@
 package org.example.cqrssimple.readmodel;
 
 import org.example.cqrssimple.event.ItemCreatedEvent;
+import org.example.cqrssimple.event.ItemDeactivatedEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -51,6 +52,29 @@ class ReadModelFacadeShould {
         // THEN
         assertThat(itemList).containsExactly(
                 new ItemListDto(uuid1.toString(), itemName1),
+                new ItemListDto(uuid2.toString(), itemName2)
+        );
+    }
+
+    @Test
+    void return1Item_whenCreate2Items_andRemove1() {
+        // GIVEN
+        UUID uuid1 = UUID.randomUUID();
+        String itemName1 = "item1";
+        UUID uuid2 = UUID.randomUUID();
+        String itemName2 = "item2";
+
+        eventPublisher.publish(List.of(
+                new ItemCreatedEvent(uuid1, itemName1),
+                new ItemCreatedEvent(uuid2, itemName2),
+                new ItemDeactivatedEvent(uuid1)
+        ));
+
+        // WHEN
+        Collection<ItemListDto> itemList = readModelFacade.getItemList();
+
+        // THEN
+        assertThat(itemList).containsExactly(
                 new ItemListDto(uuid2.toString(), itemName2)
         );
     }
