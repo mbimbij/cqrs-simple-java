@@ -9,6 +9,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -20,10 +21,11 @@ class ReadModelFacadeShould {
 
     @BeforeEach
     void setUp() {
-        FakeReadDatabase fakeReadDatabase = new FakeReadDatabase();
-        readModelFacade = new ReadModelFacade(fakeReadDatabase);
+        FakeDatabaseItemList fakeDatabaseItemList = new FakeDatabaseItemList();
+        FakeDatabaseItemDetails fakeDatabaseItemDetails = new FakeDatabaseItemDetails();
+        readModelFacade = new ReadModelFacade(fakeDatabaseItemList, fakeDatabaseItemDetails);
         eventPublisher = new EventPublisher();
-        eventPublisher.subscribe(new ItemListView(fakeReadDatabase));
+        eventPublisher.subscribe(new ItemListView(fakeDatabaseItemList));
     }
 
     @Nested
@@ -108,5 +110,17 @@ class ReadModelFacadeShould {
     @Nested
     public class ItemDetails {
 
+        private UUID uuid;
+        private String name = "name";
+
+        @BeforeEach
+        void setUp() {
+            uuid = UUID.randomUUID();
+        }
+
+        @Test
+        void returnEmpty_whenItemNotCreatedYet() {
+            Optional<ItemDetailsDto> itemDetailsDto = readModelFacade.getItemDetails(uuid);
+        }
     }
 }
