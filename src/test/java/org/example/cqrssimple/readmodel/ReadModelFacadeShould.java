@@ -191,5 +191,20 @@ class ReadModelFacadeShould {
             ItemDetailsDto expectedItemDetailsDto = new ItemDetailsDto(uuid.toString(), newName, 0);
             assertThat(itemDetailsDtoOptional.get()).usingRecursiveComparison().isEqualTo(expectedItemDetailsDto);
         }
+
+        @Test
+        void returnNoItem_whenItemDeactivated() {
+            // GIVEN
+            eventPublisher.publish(List.of(
+                    new ItemCreatedEvent(uuid, itemName),
+                    new ItemDeactivatedEvent(uuid)
+            ));
+
+            // WHEN
+            Optional<ItemDetailsDto> itemDetailsDtoOptional = readModelFacade.getItemDetails(uuid);
+
+            // THEN
+            assertThat(itemDetailsDtoOptional).isEmpty();
+        }
     }
 }

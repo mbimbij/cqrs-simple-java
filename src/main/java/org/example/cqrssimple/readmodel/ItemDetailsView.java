@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.cqrssimple.event.Event;
 import org.example.cqrssimple.event.ItemCheckedInEvent;
 import org.example.cqrssimple.event.ItemCreatedEvent;
+import org.example.cqrssimple.event.ItemDeactivatedEvent;
 import org.example.cqrssimple.event.ItemRemovedEvent;
 import org.example.cqrssimple.event.ItemRenamedEvent;
 
@@ -22,6 +23,8 @@ public class ItemDetailsView implements IEventHandler {
             readDatabase.remove(itemRemovedEvent.getItemId().toString(), itemRemovedEvent.getQuantity());
         } else if (event instanceof ItemRenamedEvent itemRenamedEvent) {
             readDatabase.rename(itemRenamedEvent.getItemId().toString(), itemRenamedEvent.getNewName());
+        } else if (event instanceof ItemDeactivatedEvent itemDeactivatedEvent) {
+            readDatabase.deactivate(itemDeactivatedEvent.getItemId().toString());
         }
     }
 
@@ -30,6 +33,7 @@ public class ItemDetailsView implements IEventHandler {
         return event instanceof ItemCreatedEvent
                || event instanceof ItemCheckedInEvent
                || event instanceof ItemRemovedEvent
-               || event instanceof ItemRenamedEvent;
+               || event instanceof ItemRenamedEvent
+               || event instanceof ItemDeactivatedEvent;
     }
 }

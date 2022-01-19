@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Optional;
 
 public class FakeDatabaseItemDetails implements IReadDatabaseItemDetails {
-    private Map<String, ItemDetailsDto> items = new HashMap<>();
+    private final Map<String, ItemDetailsDto> items = new HashMap<>();
 
     @Override
     public void save(ItemDetailsDto itemDetailsDto) {
@@ -18,8 +18,8 @@ public class FakeDatabaseItemDetails implements IReadDatabaseItemDetails {
     }
 
     @Override
-    public void delete(String itemId) {
-
+    public void deactivate(String itemId) {
+        items.remove(itemId);
     }
 
     @Override

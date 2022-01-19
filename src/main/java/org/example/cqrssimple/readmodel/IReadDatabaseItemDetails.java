@@ -7,7 +7,7 @@ public interface IReadDatabaseItemDetails {
 
     Optional<ItemDetailsDto> get(String itemId);
 
-    void delete(String itemId);
+    void deactivate(String itemId);
 
     void rename(String itemId, String newName);
 
