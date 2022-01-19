@@ -97,7 +97,7 @@ class ReadModelFacadeShould {
 
             eventPublisher.publish(List.of(
                     new ItemCreatedEvent(uuid, oldName),
-                    new ItemRenamedEvent(uuid, oldName, newName)
+                    new ItemRenamedEvent(uuid, newName)
             ));
 
             // WHEN
@@ -132,11 +132,11 @@ class ReadModelFacadeShould {
             eventPublisher.publish(List.of(new ItemCreatedEvent(uuid, itemName)));
 
             // WHEN
-            Optional<ItemDetailsDto> itemDetailsDto = readModelFacade.getItemDetails(uuid);
+            Optional<ItemDetailsDto> itemDetailsDtoOptional = readModelFacade.getItemDetails(uuid);
 
             // THEN
             ItemDetailsDto expectedItemDetailsDto = new ItemDetailsDto(uuid.toString(), itemName, 0);
-            assertThat(itemDetailsDto).hasValue(expectedItemDetailsDto);
+            assertThat(itemDetailsDtoOptional.get()).usingRecursiveComparison().isEqualTo(expectedItemDetailsDto);
         }
 
         @Test
@@ -149,11 +149,11 @@ class ReadModelFacadeShould {
             ));
 
             // WHEN
-            Optional<ItemDetailsDto> itemDetailsDto = readModelFacade.getItemDetails(uuid);
+            Optional<ItemDetailsDto> itemDetailsDtoOptional = readModelFacade.getItemDetails(uuid);
 
             // THEN
             ItemDetailsDto expectedItemDetailsDto = new ItemDetailsDto(uuid.toString(), itemName, 2);
-            assertThat(itemDetailsDto).hasValue(expectedItemDetailsDto);
+            assertThat(itemDetailsDtoOptional.get()).usingRecursiveComparison().isEqualTo(expectedItemDetailsDto);
         }
 
         @Test
@@ -168,11 +168,28 @@ class ReadModelFacadeShould {
             ));
 
             // WHEN
-            Optional<ItemDetailsDto> itemDetailsDto = readModelFacade.getItemDetails(uuid);
+            Optional<ItemDetailsDto> itemDetailsDtoOptional = readModelFacade.getItemDetails(uuid);
 
             // THEN
             ItemDetailsDto expectedItemDetailsDto = new ItemDetailsDto(uuid.toString(), itemName, 3);
-            assertThat(itemDetailsDto).hasValue(expectedItemDetailsDto);
+            assertThat(itemDetailsDtoOptional.get()).usingRecursiveComparison().isEqualTo(expectedItemDetailsDto);
+        }
+
+        @Test
+        void returnUpdatedItemsDetails_whenItemRenamed() {
+            // GIVEN
+            String newName = "new name";
+            eventPublisher.publish(List.of(
+                    new ItemCreatedEvent(uuid, itemName),
+                    new ItemRenamedEvent(uuid, newName)
+            ));
+
+            // WHEN
+            Optional<ItemDetailsDto> itemDetailsDtoOptional = readModelFacade.getItemDetails(uuid);
+
+            // THEN
+            ItemDetailsDto expectedItemDetailsDto = new ItemDetailsDto(uuid.toString(), newName, 0);
+            assertThat(itemDetailsDtoOptional.get()).usingRecursiveComparison().isEqualTo(expectedItemDetailsDto);
         }
     }
 }

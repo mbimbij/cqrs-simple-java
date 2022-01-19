@@ -43,7 +43,7 @@ public class InventoryItem {
     }
 
     public void rename(String newName) {
-        this.uncommittedChanges.add(new ItemRenamedEvent(this.uuid, name, newName));
+        this.uncommittedChanges.add(new ItemRenamedEvent(this.uuid, newName));
         name = newName;
     }
 

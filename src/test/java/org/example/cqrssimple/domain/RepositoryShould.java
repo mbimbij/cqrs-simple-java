@@ -51,7 +51,7 @@ class RepositoryShould {
         String newName = "new name";
         inMemoryEventStore.store(List.of(
                 new ItemCreatedEvent(uuid, itemName),
-                new ItemRenamedEvent(uuid, itemName, newName)
+                new ItemRenamedEvent(uuid, newName)
         ));
 
         // WHEN

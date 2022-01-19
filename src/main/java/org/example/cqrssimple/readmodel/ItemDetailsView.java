@@ -5,6 +5,7 @@ import org.example.cqrssimple.event.Event;
 import org.example.cqrssimple.event.ItemCheckedInEvent;
 import org.example.cqrssimple.event.ItemCreatedEvent;
 import org.example.cqrssimple.event.ItemRemovedEvent;
+import org.example.cqrssimple.event.ItemRenamedEvent;
 
 @RequiredArgsConstructor
 public class ItemDetailsView implements IEventHandler {
@@ -19,6 +20,8 @@ public class ItemDetailsView implements IEventHandler {
             readDatabase.checkIn(itemCheckedInEvent.getItemId().toString(), itemCheckedInEvent.getQuantity());
         } else if (event instanceof ItemRemovedEvent itemRemovedEvent) {
             readDatabase.remove(itemRemovedEvent.getItemId().toString(), itemRemovedEvent.getQuantity());
+        } else if (event instanceof ItemRenamedEvent itemRenamedEvent) {
+            readDatabase.rename(itemRenamedEvent.getItemId().toString(), itemRenamedEvent.getNewName());
         }
     }
 
@@ -26,6 +29,7 @@ public class ItemDetailsView implements IEventHandler {
     public boolean accept(Event event) {
         return event instanceof ItemCreatedEvent
                || event instanceof ItemCheckedInEvent
-               || event instanceof ItemRemovedEvent;
+               || event instanceof ItemRemovedEvent
+               || event instanceof ItemRenamedEvent;
     }
 }

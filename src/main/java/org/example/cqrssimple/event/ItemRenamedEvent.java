@@ -8,12 +8,10 @@ import java.util.UUID;
 @EqualsAndHashCode(callSuper = true)
 @Value
 public class ItemRenamedEvent extends Event {
-    String oldName;
     String newName;
 
-    public ItemRenamedEvent(UUID uuid, String oldName, String newName) {
+    public ItemRenamedEvent(UUID uuid, String newName) {
         super(uuid);
-        this.oldName = oldName;
         this.newName = newName;
     }
 }

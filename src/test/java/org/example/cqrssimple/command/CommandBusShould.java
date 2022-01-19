@@ -237,7 +237,7 @@ public class CommandBusShould {
         void saveAndPublishEvent_whenRenameItemCommandSent() {
             // GIVEN
             String newName = "new name";
-            ItemRenamedEvent expectedEvent = new ItemRenamedEvent(uuid, itemName, newName);
+            ItemRenamedEvent expectedEvent = new ItemRenamedEvent(uuid, newName);
 
             // WHEN
             commandBus.send(new RenameItemCommand(uuid, newName));

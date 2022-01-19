@@ -24,7 +24,8 @@ public class FakeDatabaseItemDetails implements IReadDatabaseItemDetails {
 
     @Override
     public void rename(String itemId, String newName) {
-
+        ItemDetailsDto itemDetailsDto = items.get(itemId);
+        itemDetailsDto.setName(newName);
     }
 
     @Override
