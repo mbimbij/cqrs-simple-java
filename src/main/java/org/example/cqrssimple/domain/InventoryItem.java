@@ -1,5 +1,6 @@
 package org.example.cqrssimple.domain;
 
+import lombok.Getter;
 import org.example.cqrssimple.command.ItemRenamedEvent;
 import org.example.cqrssimple.event.Event;
 import org.example.cqrssimple.event.ItemCheckedInEvent;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+@Getter
 public class InventoryItem {
     private final UUID uuid;
     private String name;
@@ -24,14 +26,6 @@ public class InventoryItem {
         this.uuid = uuid;
         this.name = name;
         uncommittedChanges.add(new ItemCreatedEvent(uuid, name));
-    }
-
-    public List<Event> getUncommittedChanges() {
-        return uncommittedChanges;
-    }
-
-    public int getQuantity() {
-        return quantity;
     }
 
     public void checkIn(int quantity) {
@@ -60,5 +54,9 @@ public class InventoryItem {
 
     public void apply(ItemRemovedEvent itemRemovedEvent) {
         this.quantity -= itemRemovedEvent.getQuantity();
+    }
+
+    public void apply(ItemRenamedEvent itemRenamedEvent) {
+        name = itemRenamedEvent.getNewName();
     }
 }

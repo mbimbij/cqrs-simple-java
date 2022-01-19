@@ -1,6 +1,7 @@
 package org.example.cqrssimple.domain;
 
 import lombok.RequiredArgsConstructor;
+import org.example.cqrssimple.command.ItemRenamedEvent;
 import org.example.cqrssimple.event.Event;
 import org.example.cqrssimple.event.ItemCheckedInEvent;
 import org.example.cqrssimple.event.ItemCreatedEvent;
@@ -36,6 +37,8 @@ public class Repository {
                 item.apply(itemCheckedInEvent);
             }else if (event instanceof ItemRemovedEvent itemRemovedEvent){
                 item.apply(itemRemovedEvent);
+            }else if (event instanceof ItemRenamedEvent itemRenamedEvent){
+                item.apply(itemRenamedEvent);
             }
         }
 
