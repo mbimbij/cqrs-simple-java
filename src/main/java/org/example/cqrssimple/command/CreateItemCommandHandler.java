@@ -1,8 +1,8 @@
 package org.example.cqrssimple.command;
 
 import lombok.RequiredArgsConstructor;
-import org.example.cqrssimple.writemodel.InventoryItem;
-import org.example.cqrssimple.writemodel.Repository;
+import org.example.cqrssimple.domain.InventoryItem;
+import org.example.cqrssimple.domain.Repository;
 
 @RequiredArgsConstructor
 public class CreateItemCommandHandler implements ICommandHandler<CreateItemCommand> {

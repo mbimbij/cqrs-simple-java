@@ -1,4 +1,4 @@
-package org.example.cqrssimple.writemodel;
+package org.example.cqrssimple.domain;
 
 import org.example.cqrssimple.event.ItemDeactivatedEvent;
 import org.example.cqrssimple.event.ItemRenamedEvent;

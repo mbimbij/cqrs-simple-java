@@ -1,8 +1,8 @@
 package org.example.cqrssimple.command;
 
-import org.example.cqrssimple.writemodel.IEventPublisher;
-import org.example.cqrssimple.writemodel.NotEnoughItemsException;
-import org.example.cqrssimple.writemodel.Repository;
+import org.example.cqrssimple.domain.IEventPublisher;
+import org.example.cqrssimple.domain.NotEnoughItemsException;
+import org.example.cqrssimple.domain.Repository;
 import org.example.cqrssimple.event.InMemoryEventStore;
 import org.example.cqrssimple.event.ItemCheckedInEvent;
 import org.example.cqrssimple.event.ItemCreatedEvent;
