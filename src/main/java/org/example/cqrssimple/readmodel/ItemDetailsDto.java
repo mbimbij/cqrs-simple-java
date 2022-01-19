@@ -1,8 +1,10 @@
 package org.example.cqrssimple.readmodel;
 
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
-@Value
+@Data
+@AllArgsConstructor
 public class ItemDetailsDto {
     String uuid;
     String name;

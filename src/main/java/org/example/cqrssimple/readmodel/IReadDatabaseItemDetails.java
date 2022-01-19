@@ -10,4 +10,6 @@ public interface IReadDatabaseItemDetails {
     void delete(String itemId);
 
     void rename(String itemId, String newName);
+
+    void checkIn(String itemId, int quantity);
 }

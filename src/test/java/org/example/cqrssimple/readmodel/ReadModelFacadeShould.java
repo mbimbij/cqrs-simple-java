@@ -1,5 +1,6 @@
 package org.example.cqrssimple.readmodel;
 
+import org.example.cqrssimple.event.ItemCheckedInEvent;
 import org.example.cqrssimple.event.ItemCreatedEvent;
 import org.example.cqrssimple.event.ItemDeactivatedEvent;
 import org.example.cqrssimple.event.ItemRenamedEvent;
@@ -134,6 +135,23 @@ class ReadModelFacadeShould {
 
             // THEN
             ItemDetailsDto expectedItemDetailsDto = new ItemDetailsDto(uuid.toString(), itemName, 0);
+            assertThat(itemDetailsDto).hasValue(expectedItemDetailsDto);
+        }
+
+        @Test
+        void returnUpdatedItemsDetails_whenItemsCheckedIn() {
+            // GIVEN
+            int checkedInQuantity = 2;
+            eventPublisher.publish(List.of(
+                    new ItemCreatedEvent(uuid, itemName),
+                    new ItemCheckedInEvent(uuid, checkedInQuantity)
+            ));
+
+            // WHEN
+            Optional<ItemDetailsDto> itemDetailsDto = readModelFacade.getItemDetails(uuid);
+
+            // THEN
+            ItemDetailsDto expectedItemDetailsDto = new ItemDetailsDto(uuid.toString(), itemName, 2);
             assertThat(itemDetailsDto).hasValue(expectedItemDetailsDto);
         }
     }

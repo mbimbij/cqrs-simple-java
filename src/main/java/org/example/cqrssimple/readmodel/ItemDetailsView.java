@@ -2,6 +2,7 @@ package org.example.cqrssimple.readmodel;
 
 import lombok.RequiredArgsConstructor;
 import org.example.cqrssimple.event.Event;
+import org.example.cqrssimple.event.ItemCheckedInEvent;
 import org.example.cqrssimple.event.ItemCreatedEvent;
 
 @RequiredArgsConstructor
@@ -13,11 +14,14 @@ public class ItemDetailsView implements IEventHandler {
     public void handle(Event event) {
         if (event instanceof ItemCreatedEvent itemCreatedEvent) {
             readDatabase.save(new ItemDetailsDto(itemCreatedEvent.getItemId().toString(), itemCreatedEvent.getItemName(), 0));
+        } else if (event instanceof ItemCheckedInEvent itemCheckedInEvent) {
+            readDatabase.checkIn(itemCheckedInEvent.getItemId().toString(), itemCheckedInEvent.getQuantity());
         }
     }
 
     @Override
     public boolean accept(Event event) {
-        return event instanceof ItemCreatedEvent;
+        return event instanceof ItemCreatedEvent
+               || event instanceof ItemCheckedInEvent;
     }
 }
