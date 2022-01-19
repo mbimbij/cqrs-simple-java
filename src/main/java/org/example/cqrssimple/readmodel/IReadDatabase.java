@@ -1,7 +1,8 @@
 package org.example.cqrssimple.readmodel;
 
-import java.util.List;
+import java.util.Collection;
 
 public interface IReadDatabase {
-    public List<ItemListDto> getItemList();
+    Collection<ItemListDto> getItemList();
+    void save(ItemListDto itemListDto);
 }

@@ -2,13 +2,13 @@ package org.example.cqrssimple.readmodel;
 
 import lombok.RequiredArgsConstructor;
 
-import java.util.List;
+import java.util.Collection;
 
 @RequiredArgsConstructor
 public class ReadModelFacade {
     private final IReadDatabase readDatabase;
 
-    public List<ItemListDto> getItemList() {
+    public Collection<ItemListDto> getItemList() {
         return readDatabase.getItemList();
     }
 }
