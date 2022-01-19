@@ -30,6 +30,10 @@ public class InventoryItem {
         return uncommittedChanges;
     }
 
+    public int getQuantity() {
+        return quantity;
+    }
+
     public void checkIn(int quantity) {
         this.uncommittedChanges.add(new ItemCheckedInEvent(this.uuid, quantity));
     }
@@ -52,5 +56,9 @@ public class InventoryItem {
 
     public void apply(ItemCheckedInEvent itemCheckedInEvent) {
         this.quantity += itemCheckedInEvent.getQuantity();
+    }
+
+    public void apply(ItemRemovedEvent itemRemovedEvent) {
+        this.quantity -= itemRemovedEvent.getQuantity();
     }
 }

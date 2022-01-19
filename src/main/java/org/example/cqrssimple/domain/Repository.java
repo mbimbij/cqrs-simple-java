@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.example.cqrssimple.event.Event;
 import org.example.cqrssimple.event.ItemCheckedInEvent;
 import org.example.cqrssimple.event.ItemCreatedEvent;
+import org.example.cqrssimple.event.ItemRemovedEvent;
 
 import java.util.List;
 import java.util.UUID;
@@ -33,6 +34,8 @@ public class Repository {
                 item.apply(itemCreatedEvent);
             }else if (event instanceof ItemCheckedInEvent itemCheckedInEvent){
                 item.apply(itemCheckedInEvent);
+            }else if (event instanceof ItemRemovedEvent itemRemovedEvent){
+                item.apply(itemRemovedEvent);
             }
         }
 
