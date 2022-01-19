@@ -1,8 +1,7 @@
-package org.example.cqrssimple.command;
+package org.example.cqrssimple.event;
 
 import lombok.EqualsAndHashCode;
 import lombok.Value;
-import org.example.cqrssimple.event.Event;
 
 import java.util.UUID;
 

@@ -1,7 +1,8 @@
 package org.example.cqrssimple.domain;
 
 import lombok.Getter;
-import org.example.cqrssimple.command.ItemRenamedEvent;
+import org.example.cqrssimple.event.ItemDeactivatedEvent;
+import org.example.cqrssimple.event.ItemRenamedEvent;
 import org.example.cqrssimple.event.Event;
 import org.example.cqrssimple.event.ItemCheckedInEvent;
 import org.example.cqrssimple.event.ItemCreatedEvent;
@@ -17,13 +18,14 @@ public class InventoryItem {
     private String name;
     private int quantity = 0;
     private final List<Event> uncommittedChanges = new ArrayList<>();
+    private boolean activated = true;
 
     public InventoryItem(UUID uuid) {
         this.uuid = uuid;
     }
 
     public InventoryItem(UUID uuid, String name) {
-        this.uuid = uuid;
+        this(uuid);
         this.name = name;
         uncommittedChanges.add(new ItemCreatedEvent(uuid, name));
     }
@@ -42,6 +44,11 @@ public class InventoryItem {
     public void rename(String newName) {
         this.uncommittedChanges.add(new ItemRenamedEvent(this.uuid, name, newName));
         name = newName;
+    }
+
+    public void deactivate() {
+        activated = false;
+        uncommittedChanges.add(new ItemDeactivatedEvent(uuid));
     }
 
     public void apply(ItemCreatedEvent itemCreatedEvent) {

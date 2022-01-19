@@ -1,7 +1,7 @@
 package org.example.cqrssimple.domain;
 
 import lombok.RequiredArgsConstructor;
-import org.example.cqrssimple.command.ItemRenamedEvent;
+import org.example.cqrssimple.event.ItemRenamedEvent;
 import org.example.cqrssimple.event.Event;
 import org.example.cqrssimple.event.ItemCheckedInEvent;
 import org.example.cqrssimple.event.ItemCreatedEvent;

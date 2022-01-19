@@ -6,7 +6,9 @@ import org.example.cqrssimple.domain.Repository;
 import org.example.cqrssimple.event.InMemoryEventStore;
 import org.example.cqrssimple.event.ItemCheckedInEvent;
 import org.example.cqrssimple.event.ItemCreatedEvent;
+import org.example.cqrssimple.event.ItemDeactivatedEvent;
 import org.example.cqrssimple.event.ItemRemovedEvent;
+import org.example.cqrssimple.event.ItemRenamedEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -239,6 +241,28 @@ public class CommandBusShould {
 
             // WHEN
             commandBus.send(new RenameItemCommand(uuid, newName));
+
+            // THEN
+            assertThat(inMemoryEventStore.getEvents()).contains(expectedEvent);
+            verify(eventPublisher).publish(eq(List.of(expectedEvent)));
+        }
+    }
+
+    @Nested
+    public class DeactivateItem {
+        @BeforeEach
+        void setUp() {
+            commandBus.registerHandler(new DeactivateItemCommandHandler(repository));
+            inMemoryEventStore.store(List.of(new ItemDeactivatedEvent(uuid)));
+        }
+
+        @Test
+        void saveAndPublishEvent_whenDeactivateItemCommandSent() {
+            // GIVEN
+            ItemDeactivatedEvent expectedEvent = new ItemDeactivatedEvent(uuid);
+
+            // WHEN
+            commandBus.send(new DeactivateItemCommand(uuid));
 
             // THEN
             assertThat(inMemoryEventStore.getEvents()).contains(expectedEvent);

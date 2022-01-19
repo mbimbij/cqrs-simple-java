@@ -1,6 +1,6 @@
 package org.example.cqrssimple.domain;
 
-import org.example.cqrssimple.command.ItemRenamedEvent;
+import org.example.cqrssimple.event.ItemRenamedEvent;
 import org.example.cqrssimple.event.InMemoryEventStore;
 import org.example.cqrssimple.event.ItemCheckedInEvent;
 import org.example.cqrssimple.event.ItemCreatedEvent;
