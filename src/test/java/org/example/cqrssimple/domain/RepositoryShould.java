@@ -1,5 +1,6 @@
 package org.example.cqrssimple.domain;
 
+import org.example.cqrssimple.event.ItemDeactivatedEvent;
 import org.example.cqrssimple.event.ItemRenamedEvent;
 import org.example.cqrssimple.event.InMemoryEventStore;
 import org.example.cqrssimple.event.ItemCheckedInEvent;
@@ -58,5 +59,20 @@ class RepositoryShould {
 
         // THEN
         assertThat(item.getName()).isEqualTo(newName);
+    }
+
+    @Test
+    void applyItemDeactivatedEvent() {
+        // GIVEN
+        inMemoryEventStore.store(List.of(
+                new ItemCreatedEvent(uuid, itemName),
+                new ItemDeactivatedEvent(uuid)
+        ));
+
+        // WHEN
+        InventoryItem item = repository.findById(uuid);
+
+        // THEN
+        assertThat(item.isActivated()).isFalse();
     }
 }

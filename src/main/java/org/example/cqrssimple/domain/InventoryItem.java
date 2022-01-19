@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+
 @Getter
 public class InventoryItem {
     private final UUID uuid;
@@ -65,5 +66,9 @@ public class InventoryItem {
 
     public void apply(ItemRenamedEvent itemRenamedEvent) {
         name = itemRenamedEvent.getNewName();
+    }
+
+    public void apply(ItemDeactivatedEvent itemDeactivatedEvent) {
+        activated = false;
     }
 }
