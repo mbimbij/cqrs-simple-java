@@ -12,4 +12,6 @@ public interface IReadDatabaseItemDetails {
     void rename(String itemId, String newName);
 
     void checkIn(String itemId, int quantity);
+
+    void remove(String itemId, int quantity);
 }

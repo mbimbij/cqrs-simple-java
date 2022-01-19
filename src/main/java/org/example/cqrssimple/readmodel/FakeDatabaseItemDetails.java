@@ -32,4 +32,10 @@ public class FakeDatabaseItemDetails implements IReadDatabaseItemDetails {
         ItemDetailsDto itemDetailsDto = items.get(itemId);
         itemDetailsDto.setQuantity(itemDetailsDto.getQuantity() + checkInQuantity);
     }
+
+    @Override
+    public void remove(String itemId, int removeQuantity) {
+        ItemDetailsDto itemDetailsDto = items.get(itemId);
+        itemDetailsDto.setQuantity(itemDetailsDto.getQuantity() - removeQuantity);
+    }
 }

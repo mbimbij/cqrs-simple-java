@@ -3,6 +3,7 @@ package org.example.cqrssimple.readmodel;
 import org.example.cqrssimple.event.ItemCheckedInEvent;
 import org.example.cqrssimple.event.ItemCreatedEvent;
 import org.example.cqrssimple.event.ItemDeactivatedEvent;
+import org.example.cqrssimple.event.ItemRemovedEvent;
 import org.example.cqrssimple.event.ItemRenamedEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -139,7 +140,7 @@ class ReadModelFacadeShould {
         }
 
         @Test
-        void returnUpdatedItemsDetails_whenItemsCheckedIn() {
+        void returnUpdatedItemsDetails_whenItemCheckedIn() {
             // GIVEN
             int checkedInQuantity = 2;
             eventPublisher.publish(List.of(
@@ -152,6 +153,25 @@ class ReadModelFacadeShould {
 
             // THEN
             ItemDetailsDto expectedItemDetailsDto = new ItemDetailsDto(uuid.toString(), itemName, 2);
+            assertThat(itemDetailsDto).hasValue(expectedItemDetailsDto);
+        }
+
+        @Test
+        void returnUpdatedItemsDetails_whenItemRemoved() {
+            // GIVEN
+            int checkedInQuantity = 5;
+            int removeQuantity = 2;
+            eventPublisher.publish(List.of(
+                    new ItemCreatedEvent(uuid, itemName),
+                    new ItemCheckedInEvent(uuid, checkedInQuantity),
+                    new ItemRemovedEvent(uuid, removeQuantity)
+            ));
+
+            // WHEN
+            Optional<ItemDetailsDto> itemDetailsDto = readModelFacade.getItemDetails(uuid);
+
+            // THEN
+            ItemDetailsDto expectedItemDetailsDto = new ItemDetailsDto(uuid.toString(), itemName, 3);
             assertThat(itemDetailsDto).hasValue(expectedItemDetailsDto);
         }
     }
