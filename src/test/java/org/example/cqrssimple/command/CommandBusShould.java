@@ -24,6 +24,7 @@ import static org.mockito.Mockito.verify;
 public class CommandBusShould {
 
     private CommandBus commandBus = new CommandBus();
+    private Repository repository;
     private InMemoryEventStore inMemoryEventStore;
     private IEventPublisher eventPublisher;
 
@@ -31,6 +32,7 @@ public class CommandBusShould {
     void setUp() {
         inMemoryEventStore = new InMemoryEventStore();
         eventPublisher = mock(IEventPublisher.class);
+        repository = new Repository(inMemoryEventStore, eventPublisher);
     }
 
     @Nested
@@ -131,11 +133,9 @@ public class CommandBusShould {
     public class CreateItem {
 
         private CreateItemCommandHandler createItemCommandHandler;
-        private Repository repository;
 
         @BeforeEach
         void setUp() {
-            repository = new Repository(inMemoryEventStore, eventPublisher);
             createItemCommandHandler = spy(new CreateItemCommandHandler(repository));
             commandBus.registerHandler(createItemCommandHandler);
         }
