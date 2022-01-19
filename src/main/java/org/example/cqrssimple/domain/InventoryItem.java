@@ -3,6 +3,7 @@ package org.example.cqrssimple.domain;
 import org.example.cqrssimple.event.Event;
 import org.example.cqrssimple.event.ItemCheckedInEvent;
 import org.example.cqrssimple.event.ItemCreatedEvent;
+import org.example.cqrssimple.event.ItemRemovedEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,10 @@ public class InventoryItem {
     }
 
     public void checkIn(int quantity) {
-        this.quantity += quantity;
         this.uncommittedChanges.add(new ItemCheckedInEvent(this.uuid, quantity));
+    }
+
+    public void remove(int quantity) {
+        this.uncommittedChanges.add(new ItemRemovedEvent(this.uuid, quantity));
     }
 }

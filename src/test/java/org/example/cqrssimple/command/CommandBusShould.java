@@ -5,6 +5,7 @@ import org.example.cqrssimple.domain.Repository;
 import org.example.cqrssimple.event.InMemoryEventStore;
 import org.example.cqrssimple.event.ItemCheckedInEvent;
 import org.example.cqrssimple.event.ItemCreatedEvent;
+import org.example.cqrssimple.event.ItemRemovedEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -174,6 +175,31 @@ public class CommandBusShould {
 
             // WHEN
             commandBus.send(new CheckInItemCommand(uuid, quantity));
+
+            // THEN
+            assertThat(inMemoryEventStore.getEvents()).contains(expectedEvent);
+            verify(eventPublisher).publish(eq(List.of(expectedEvent)));
+        }
+    }
+
+    @Nested
+    public class RemoveItem {
+
+        @BeforeEach
+        void setUp() {
+            commandBus.registerHandler(new RemoveItemCommandHandler(repository));
+            inMemoryEventStore.store(List.of(new ItemCreatedEvent(uuid, itemName)));
+        }
+
+        @Test
+        void saveAndPublishEvent_whenRemoveCommandSent_andQuantityGreaterThanZero() {
+            // GIVEN
+            inMemoryEventStore.store(List.of(new ItemCheckedInEvent(uuid, 2)));
+            int quantity = 1;
+            ItemRemovedEvent expectedEvent = new ItemRemovedEvent(uuid, quantity);
+
+            // WHEN
+            commandBus.send(new RemoveItemCommand(uuid, quantity));
 
             // THEN
             assertThat(inMemoryEventStore.getEvents()).contains(expectedEvent);
