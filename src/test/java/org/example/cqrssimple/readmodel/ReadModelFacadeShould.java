@@ -26,6 +26,7 @@ class ReadModelFacadeShould {
         readModelFacade = new ReadModelFacade(fakeDatabaseItemList, fakeDatabaseItemDetails);
         eventPublisher = new EventPublisher();
         eventPublisher.subscribe(new ItemListView(fakeDatabaseItemList));
+        eventPublisher.subscribe(new ItemDetailsView(fakeDatabaseItemDetails));
     }
 
     @Nested
@@ -111,7 +112,7 @@ class ReadModelFacadeShould {
     public class ItemDetails {
 
         private UUID uuid;
-        private String name = "name";
+        private String itemName = "name";
 
         @BeforeEach
         void setUp() {
@@ -121,6 +122,19 @@ class ReadModelFacadeShould {
         @Test
         void returnEmpty_whenItemNotCreatedYet() {
             Optional<ItemDetailsDto> itemDetailsDto = readModelFacade.getItemDetails(uuid);
+        }
+
+        @Test
+        void returnItemsDetails_whenItemsCreated() {
+            // GIVEN
+            eventPublisher.publish(List.of(new ItemCreatedEvent(uuid, itemName)));
+
+            // WHEN
+            Optional<ItemDetailsDto> itemDetailsDto = readModelFacade.getItemDetails(uuid);
+
+            // THEN
+            ItemDetailsDto expectedItemDetailsDto = new ItemDetailsDto(uuid.toString(), itemName, 0);
+            assertThat(itemDetailsDto).hasValue(expectedItemDetailsDto);
         }
     }
 }

@@ -3,7 +3,7 @@ package org.example.cqrssimple.readmodel;
 import java.util.Optional;
 
 public interface IReadDatabaseItemDetails {
-    void save(ItemListDto itemListDto);
+    void save(ItemDetailsDto itemDetailsDto);
 
     Optional<ItemDetailsDto> get(String itemId);
 

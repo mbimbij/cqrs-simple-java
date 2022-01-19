@@ -8,8 +8,8 @@ public class FakeDatabaseItemDetails implements IReadDatabaseItemDetails {
     private Map<String, ItemDetailsDto> items = new HashMap<>();
 
     @Override
-    public void save(ItemListDto itemListDto) {
-
+    public void save(ItemDetailsDto itemDetailsDto) {
+        items.put(itemDetailsDto.getUuid(), itemDetailsDto);
     }
 
     @Override
