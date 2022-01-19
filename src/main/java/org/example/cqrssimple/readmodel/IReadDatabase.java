@@ -7,4 +7,6 @@ public interface IReadDatabase {
     void save(ItemListDto itemListDto);
 
     void deleteById(String itemId);
+
+    void rename(String toString, String newName);
 }
