@@ -1,4 +1,4 @@
-package org.example.cqrssimple.domain;
+package org.example.cqrssimple.writemodel;
 
 import lombok.RequiredArgsConstructor;
 import org.example.cqrssimple.event.ItemDeactivatedEvent;

@@ -1,4 +1,4 @@
-package org.example.cqrssimple.domain;
+package org.example.cqrssimple.writemodel;
 
 import java.util.UUID;
 

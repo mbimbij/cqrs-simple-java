@@ -1,7 +1,7 @@
 package org.example.cqrssimple.command;
 
-import org.example.cqrssimple.domain.InventoryItem;
-import org.example.cqrssimple.domain.Repository;
+import org.example.cqrssimple.writemodel.InventoryItem;
+import org.example.cqrssimple.writemodel.Repository;
 
 public class RemoveItemCommandHandler implements ICommandHandler<RemoveItemCommand> {
     private Repository repository;
