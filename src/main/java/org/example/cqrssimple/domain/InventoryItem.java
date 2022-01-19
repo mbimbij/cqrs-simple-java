@@ -1,5 +1,6 @@
 package org.example.cqrssimple.domain;
 
+import org.example.cqrssimple.command.ItemRenamedEvent;
 import org.example.cqrssimple.event.Event;
 import org.example.cqrssimple.event.ItemCheckedInEvent;
 import org.example.cqrssimple.event.ItemCreatedEvent;
@@ -13,7 +14,7 @@ public class InventoryItem {
     private final UUID uuid;
     private String name;
     private int quantity = 0;
-    private List<Event> uncommittedChanges = new ArrayList<>();
+    private final List<Event> uncommittedChanges = new ArrayList<>();
 
     public InventoryItem(UUID uuid) {
         this.uuid = uuid;
@@ -38,6 +39,11 @@ public class InventoryItem {
             throw new NotEnoughItemsException(uuid, this.quantity, quantity);
         }
         this.uncommittedChanges.add(new ItemRemovedEvent(this.uuid, quantity));
+    }
+
+    public void rename(String newName) {
+        this.uncommittedChanges.add(new ItemRenamedEvent(this.uuid, name, newName));
+        name = newName;
     }
 
     public void apply(ItemCreatedEvent itemCreatedEvent) {

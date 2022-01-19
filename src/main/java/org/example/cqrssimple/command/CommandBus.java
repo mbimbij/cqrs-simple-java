@@ -11,10 +11,6 @@ public class CommandBus {
         commandHandlers = new ArrayList<>();
     }
 
-    public CommandBus(List<ICommandHandler<? super Command>> commandHandlers) {
-        this.commandHandlers = commandHandlers;
-    }
-
     public void registerHandler(ICommandHandler commandHandler) {
         commandHandlers.add(commandHandler);
     }

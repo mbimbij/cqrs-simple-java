@@ -222,4 +222,27 @@ public class CommandBusShould {
             verify(eventPublisher, never()).publish(eq(List.of(expectedEvent)));
         }
     }
+
+    @Nested
+    public class RenameItem {
+        @BeforeEach
+        void setUp() {
+            commandBus.registerHandler(new RenameItemCommandHandler(repository));
+            inMemoryEventStore.store(List.of(new ItemCreatedEvent(uuid, itemName)));
+        }
+
+        @Test
+        void saveAndPublishEvent_whenRenameItemCommandSent() {
+            // GIVEN
+            String newName = "new name";
+            ItemRenamedEvent expectedEvent = new ItemRenamedEvent(uuid, itemName, newName);
+
+            // WHEN
+            commandBus.send(new RenameItemCommand(uuid, newName));
+
+            // THEN
+            assertThat(inMemoryEventStore.getEvents()).contains(expectedEvent);
+            verify(eventPublisher).publish(eq(List.of(expectedEvent)));
+        }
+    }
 }
