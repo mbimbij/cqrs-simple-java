@@ -29,11 +29,15 @@ public class CommandBusShould {
     private InMemoryEventStore inMemoryEventStore;
     private IEventPublisher eventPublisher;
 
+    private final String itemName = "item name";
+    private UUID uuid;
+
     @BeforeEach
     void setUp() {
         inMemoryEventStore = new InMemoryEventStore();
         eventPublisher = mock(IEventPublisher.class);
         repository = new Repository(inMemoryEventStore, eventPublisher);
+        uuid = UUID.randomUUID();
     }
 
     @Nested
@@ -133,19 +137,15 @@ public class CommandBusShould {
     @Nested
     public class CreateItem {
 
-        private CreateItemCommandHandler createItemCommandHandler;
-
         @BeforeEach
         void setUp() {
-            createItemCommandHandler = spy(new CreateItemCommandHandler(repository));
+            CreateItemCommandHandler createItemCommandHandler = spy(new CreateItemCommandHandler(repository));
             commandBus.registerHandler(createItemCommandHandler);
         }
 
         @Test
         void saveAndPublishEvent_whenCreateItemCommandSent() {
             // GIVEN
-            String itemName = "item name";
-            UUID uuid = UUID.randomUUID();
             ItemCreatedEvent expectedEvent = new ItemCreatedEvent(uuid, itemName);
 
             // WHEN
@@ -159,14 +159,17 @@ public class CommandBusShould {
 
     @Nested
     public class CheckInItem {
+
+        @BeforeEach
+        void setUp() {
+            commandBus.registerHandler(new CheckInItemCommandHandler(repository));
+            inMemoryEventStore.store(List.of(new ItemCreatedEvent(uuid, itemName)));
+        }
+
         @Test
         void saveAndPublishEvent_whenCheckInItemCommandSent() {
             // GIVEN
-            commandBus.registerHandler(new CheckInItemCommandHandler(repository));
-            String itemName = "item name";
-            UUID uuid = UUID.randomUUID();
             int quantity = 2;
-            inMemoryEventStore.store(List.of(new ItemCreatedEvent(uuid, itemName)));
             ItemCheckedInEvent expectedEvent = new ItemCheckedInEvent(uuid, quantity);
 
             // WHEN
