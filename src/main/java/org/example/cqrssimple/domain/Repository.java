@@ -2,6 +2,7 @@ package org.example.cqrssimple.domain;
 
 import lombok.RequiredArgsConstructor;
 import org.example.cqrssimple.event.Event;
+import org.example.cqrssimple.event.ItemCheckedInEvent;
 import org.example.cqrssimple.event.ItemCreatedEvent;
 
 import java.util.List;
@@ -30,6 +31,8 @@ public class Repository {
         for (Event event: events) {
             if(event instanceof ItemCreatedEvent itemCreatedEvent){
                 item.apply(itemCreatedEvent);
+            }else if (event instanceof ItemCheckedInEvent itemCheckedInEvent){
+                item.apply(itemCheckedInEvent);
             }
         }
 

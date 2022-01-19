@@ -1,6 +1,7 @@
 package org.example.cqrssimple.command;
 
 import org.example.cqrssimple.domain.IEventPublisher;
+import org.example.cqrssimple.domain.NotEnoughItemsException;
 import org.example.cqrssimple.domain.Repository;
 import org.example.cqrssimple.event.InMemoryEventStore;
 import org.example.cqrssimple.event.ItemCheckedInEvent;
@@ -192,7 +193,7 @@ public class CommandBusShould {
         }
 
         @Test
-        void saveAndPublishEvent_whenRemoveCommandSent_andQuantityGreaterThanZero() {
+        void saveAndPublishEvent_whenRemoveCommandSent_andEnoughItems() {
             // GIVEN
             inMemoryEventStore.store(List.of(new ItemCheckedInEvent(uuid, 2)));
             int quantity = 1;
@@ -204,6 +205,21 @@ public class CommandBusShould {
             // THEN
             assertThat(inMemoryEventStore.getEvents()).contains(expectedEvent);
             verify(eventPublisher).publish(eq(List.of(expectedEvent)));
+        }
+
+        @Test
+        void throwException_whenRemoveCommandSent_andNotEnoughItems() {
+            // GIVEN
+            int quantity = 1;
+            ItemRemovedEvent expectedEvent = new ItemRemovedEvent(uuid, quantity);
+
+            // WHEN
+            assertThatThrownBy(() -> commandBus.send(new RemoveItemCommand(uuid, quantity)))
+                    .isInstanceOf(NotEnoughItemsException.class);
+
+            // THEN
+            assertThat(inMemoryEventStore.getEvents()).doesNotContain(expectedEvent);
+            verify(eventPublisher, never()).publish(eq(List.of(expectedEvent)));
         }
     }
 }

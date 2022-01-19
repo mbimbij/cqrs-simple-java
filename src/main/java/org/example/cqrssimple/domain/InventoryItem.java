@@ -29,15 +29,22 @@ public class InventoryItem {
         return uncommittedChanges;
     }
 
-    public void apply(ItemCreatedEvent itemCreatedEvent) {
-        this.name = itemCreatedEvent.getItemName();
-    }
-
     public void checkIn(int quantity) {
         this.uncommittedChanges.add(new ItemCheckedInEvent(this.uuid, quantity));
     }
 
     public void remove(int quantity) {
+        if (quantity > this.quantity) {
+            throw new NotEnoughItemsException(uuid, this.quantity, quantity);
+        }
         this.uncommittedChanges.add(new ItemRemovedEvent(this.uuid, quantity));
+    }
+
+    public void apply(ItemCreatedEvent itemCreatedEvent) {
+        this.name = itemCreatedEvent.getItemName();
+    }
+
+    public void apply(ItemCheckedInEvent itemCheckedInEvent) {
+        this.quantity += itemCheckedInEvent.getQuantity();
     }
 }
