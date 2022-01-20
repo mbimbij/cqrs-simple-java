@@ -42,9 +42,9 @@ class EventPublisherShould {
         verify(itemCheckedInEventHandler, never()).handle(any());
     }
 
-    public static class ItemCheckedInEventHandler implements IEventHandler<ItemCheckedInEvent> {
+    public static class ItemCheckedInEventHandler implements IEventHandler{
         @Override
-        public void handle(ItemCheckedInEvent event) {
+        public void handle(Event event) {
 
         }
 
@@ -54,9 +54,9 @@ class EventPublisherShould {
         }
     }
 
-    public static class ItemCreatedEventHandler implements IEventHandler<ItemCreatedEvent> {
+    public static class ItemCreatedEventHandler implements IEventHandler {
         @Override
-        public void handle(ItemCreatedEvent event) {
+        public void handle(Event event) {
 
         }
 

@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface IEventPublisher {
     void publish(List<Event> events);
-    void subscribe(IEventHandler<?> eventHandler);
+    void subscribe(IEventHandler eventHandler);
 }
