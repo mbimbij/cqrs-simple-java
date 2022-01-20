@@ -29,8 +29,9 @@ class EventPublisherShould {
     void callTheAppropriateEventHandler() {
         // GIVEN
 
-        ItemCreatedEventHandler itemCreatedEventHandler = spy(new ItemCreatedEventHandler());
-        ItemCheckedInEventHandler itemCheckedInEventHandler = spy(new ItemCheckedInEventHandler());
+        FakeDatabaseItemDetails readDatabase = new FakeDatabaseItemDetails();
+        ItemCreatedEventHandler itemCreatedEventHandler = spy(new ItemCreatedEventHandler(readDatabase));
+        ItemCheckedInEventHandler itemCheckedInEventHandler = spy(new ItemCheckedInEventHandler(readDatabase));
         eventPublisher.subscribe(itemCreatedEventHandler);
         eventPublisher.subscribe(itemCheckedInEventHandler);
 
@@ -42,7 +43,11 @@ class EventPublisherShould {
         verify(itemCheckedInEventHandler, never()).handle(any());
     }
 
-    public static class ItemCheckedInEventHandler implements IEventHandler<ItemCheckedInEvent> {
+    public static class ItemCheckedInEventHandler extends IEventHandler<ItemCheckedInEvent, IReadDatabaseItemDetails> {
+        public ItemCheckedInEventHandler(IReadDatabaseItemDetails readDatabase) {
+            super(readDatabase);
+        }
+
         @Override
         public void handle(ItemCheckedInEvent event) {
 
@@ -54,7 +59,11 @@ class EventPublisherShould {
         }
     }
 
-    public static class ItemCreatedEventHandler implements IEventHandler<ItemCreatedEvent> {
+    public static class ItemCreatedEventHandler extends IEventHandler<ItemCreatedEvent, IReadDatabaseItemDetails> {
+        public ItemCreatedEventHandler(IReadDatabaseItemDetails readDatabase) {
+            super(readDatabase);
+        }
+
         @Override
         public void handle(ItemCreatedEvent event) {
 

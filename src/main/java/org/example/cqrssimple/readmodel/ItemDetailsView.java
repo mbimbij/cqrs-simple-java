@@ -1,6 +1,5 @@
 package org.example.cqrssimple.readmodel;
 
-import lombok.RequiredArgsConstructor;
 import org.example.cqrssimple.event.Event;
 import org.example.cqrssimple.event.ItemCheckedInEvent;
 import org.example.cqrssimple.event.ItemCreatedEvent;
@@ -8,10 +7,11 @@ import org.example.cqrssimple.event.ItemDeactivatedEvent;
 import org.example.cqrssimple.event.ItemRemovedEvent;
 import org.example.cqrssimple.event.ItemRenamedEvent;
 
-@RequiredArgsConstructor
-public class ItemDetailsView implements IEventHandler {
+public class ItemDetailsView extends IEventHandler<Event, IReadDatabaseItemDetails> {
 
-    private final IReadDatabaseItemDetails readDatabase;
+    public ItemDetailsView(IReadDatabaseItemDetails readDatabase) {
+        super(readDatabase);
+    }
 
     @Override
     public void handle(Event event) {

@@ -6,10 +6,11 @@ import org.example.cqrssimple.event.ItemCreatedEvent;
 import org.example.cqrssimple.event.ItemDeactivatedEvent;
 import org.example.cqrssimple.event.ItemRenamedEvent;
 
-@RequiredArgsConstructor
-public class ItemListView implements IEventHandler {
+public class ItemListView extends IEventHandler<Event, IReadDatabaseItemList> {
 
-    private final IReadDatabaseItemList readDatabase;
+    public ItemListView(IReadDatabaseItemList readDatabase) {
+        super(readDatabase);
+    }
 
     @Override
     public void handle(Event event) {

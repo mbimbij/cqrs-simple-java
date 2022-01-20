@@ -1,9 +1,13 @@
 package org.example.cqrssimple.readmodel;
 
+import lombok.RequiredArgsConstructor;
 import org.example.cqrssimple.event.Event;
 
-public interface IEventHandler<T extends Event> {
-    void handle(T event);
 
-    boolean accept(Event event);
+@RequiredArgsConstructor
+public abstract class IEventHandler<TEvent extends Event, TReadDatabase> {
+    protected final TReadDatabase readDatabase;
+    public abstract void handle(TEvent event);
+
+    public abstract boolean accept(Event event);
 }

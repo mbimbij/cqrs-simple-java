@@ -5,6 +5,11 @@ import org.example.cqrssimple.event.ItemCreatedEvent;
 import org.example.cqrssimple.event.ItemDeactivatedEvent;
 import org.example.cqrssimple.event.ItemRemovedEvent;
 import org.example.cqrssimple.event.ItemRenamedEvent;
+import org.example.cqrssimple.readmodel.itemdetails.ItemDetailsCheckedInEventHandler;
+import org.example.cqrssimple.readmodel.itemdetails.ItemDetailsCreatedEventHandler;
+import org.example.cqrssimple.readmodel.itemdetails.ItemDetailsDeactivatedEventHandler;
+import org.example.cqrssimple.readmodel.itemdetails.ItemDetailsRemovedEventHandler;
+import org.example.cqrssimple.readmodel.itemdetails.ItemDetailsRenamedEventHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -20,15 +25,17 @@ class ReadModelFacadeShould {
 
     private ReadModelFacade readModelFacade;
     private EventPublisher eventPublisher;
+    private FakeDatabaseItemList readDatabaseItemList;
+    private FakeDatabaseItemDetails readDatabaseItemDetails;
 
     @BeforeEach
     void setUp() {
-        FakeDatabaseItemList fakeDatabaseItemList = new FakeDatabaseItemList();
-        FakeDatabaseItemDetails fakeDatabaseItemDetails = new FakeDatabaseItemDetails();
-        readModelFacade = new ReadModelFacade(fakeDatabaseItemList, fakeDatabaseItemDetails);
+        readDatabaseItemList = new FakeDatabaseItemList();
+        readDatabaseItemDetails = new FakeDatabaseItemDetails();
+        readModelFacade = new ReadModelFacade(readDatabaseItemList, readDatabaseItemDetails);
         eventPublisher = new EventPublisher();
-        eventPublisher.subscribe(new ItemListView(fakeDatabaseItemList));
-        eventPublisher.subscribe(new ItemDetailsView(fakeDatabaseItemDetails));
+        eventPublisher.subscribe(new ItemListView(readDatabaseItemList));
+//        eventPublisher.subscribe(new ItemDetailsView(fakeDatabaseItemDetails));
     }
 
     @Nested
@@ -119,6 +126,11 @@ class ReadModelFacadeShould {
         @BeforeEach
         void setUp() {
             uuid = UUID.randomUUID();
+            eventPublisher.subscribe(new ItemDetailsCreatedEventHandler(readDatabaseItemDetails));
+            eventPublisher.subscribe(new ItemDetailsCheckedInEventHandler(readDatabaseItemDetails));
+            eventPublisher.subscribe(new ItemDetailsRemovedEventHandler(readDatabaseItemDetails));
+            eventPublisher.subscribe(new ItemDetailsRenamedEventHandler(readDatabaseItemDetails));
+            eventPublisher.subscribe(new ItemDetailsDeactivatedEventHandler(readDatabaseItemDetails));
         }
 
         @Test
