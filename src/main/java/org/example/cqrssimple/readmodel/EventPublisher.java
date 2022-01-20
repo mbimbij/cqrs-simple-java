@@ -17,7 +17,7 @@ public class EventPublisher implements IEventPublisher {
     }
 
     @Override
-    public void subscribe(IEventHandler eventHandler) {
+    public void subscribe(IEventHandler<?> eventHandler) {
         eventHandlers.add(eventHandler);
     }
 
