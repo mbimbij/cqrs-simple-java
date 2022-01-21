@@ -22,6 +22,19 @@ class EventHandlerShould {
         assertThat(eventAccepted).isTrue();
     }
 
+    @Test
+    void notAcceptEventOfACompletelyOtherType() {
+        // GIVEN
+        Event2 event1 = new Event2(UUID.randomUUID().toString());
+        EventHandler1 eventHandler1 = new EventHandler1();
+
+        // WHEN
+        boolean eventAccepted = eventHandler1.accept(event1);
+
+        // THEN
+        assertThat(eventAccepted).isFalse();
+    }
+
     private class EventHandler1 extends IEventHandler<Event1> {
         protected EventHandler1() {
             super(Event1.class);
@@ -35,6 +48,12 @@ class EventHandlerShould {
 
     private class Event1 extends IDomainEvent {
         public Event1(String itemId) {
+            super(itemId);
+        }
+    }
+
+    private class Event2 extends IDomainEvent {
+        public Event2(String itemId) {
             super(itemId);
         }
     }

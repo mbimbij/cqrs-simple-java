@@ -12,9 +12,4 @@ public class ItemCreatedItemListHandler extends IEventHandler<ItemCreatedEvent> 
     public void handle(IDomainEvent domainEvent) {
         System.out.println();
     }
-//
-//    @Override
-//    public boolean accept(IDomainEvent domainEvent) {
-//        return IEventHandler.super.accept(domainEvent);
-//    }
 }
