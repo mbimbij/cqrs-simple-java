@@ -35,4 +35,8 @@ public class InventoryItem {
         deleted = true;
         events.add(new ItemDeletedEvent(id));
     }
+
+    public void remove(int quantity, List<ItemEvent> events) {
+        events.add(new ItemRemovedEvent(id, quantity));
+    }
 }

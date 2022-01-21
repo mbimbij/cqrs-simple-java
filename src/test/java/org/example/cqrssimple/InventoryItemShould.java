@@ -81,5 +81,14 @@ public class InventoryItemShould {
         assertThat(events).filteredOn(event -> event instanceof ItemDeletedEvent).hasSize(1);
     }
 
+    @Test
+    void produceItemRemovedEvent_whenRemove() {
+        // WHEN
+        int quantity = 2;
+        item.remove(quantity, events);
 
+        // THEN
+        ItemRemovedEvent expectedEvent = new ItemRemovedEvent(itemId, quantity);
+        assertThat(events).contains(expectedEvent);
+    }
 }
