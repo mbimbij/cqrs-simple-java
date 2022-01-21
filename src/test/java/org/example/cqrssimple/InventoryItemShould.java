@@ -1,5 +1,6 @@
 package org.example.cqrssimple;
 
+import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -63,7 +64,10 @@ public class InventoryItemShould {
 
         // THEN
         ItemDeletedEvent expectedEvent = new ItemDeletedEvent(itemId);
-        assertThat(events).contains(expectedEvent);
+        SoftAssertions.assertSoftly(softAssertions -> {
+            assertThat(events).filteredOn(event -> event instanceof ItemDeletedEvent).hasSize(1);
+            softAssertions.assertThat(events).contains(expectedEvent);
+        });
     }
 
     @Test
@@ -76,4 +80,6 @@ public class InventoryItemShould {
         ItemDeletedEvent expectedEvent = new ItemDeletedEvent(itemId);
         assertThat(events).filteredOn(event -> event instanceof ItemDeletedEvent).hasSize(1);
     }
+
+
 }
