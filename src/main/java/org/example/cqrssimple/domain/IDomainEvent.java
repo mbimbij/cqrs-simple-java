@@ -1,4 +1,4 @@
-package org.example.cqrssimple;
+package org.example.cqrssimple.domain;
 
 import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;

@@ -1,4 +1,4 @@
-package org.example.cqrssimple;
+package org.example.cqrssimple.domain;
 
 import java.util.List;
 import java.util.Objects;

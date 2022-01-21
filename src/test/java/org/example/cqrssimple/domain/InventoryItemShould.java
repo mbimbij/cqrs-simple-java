@@ -1,4 +1,4 @@
-package org.example.cqrssimple;
+package org.example.cqrssimple.domain;
 
 import org.assertj.core.api.SoftAssertions;
 import org.junit.jupiter.api.BeforeEach;

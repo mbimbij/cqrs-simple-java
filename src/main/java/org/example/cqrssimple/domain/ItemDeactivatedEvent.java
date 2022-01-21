@@ -1,4 +1,4 @@
-package org.example.cqrssimple;
+package org.example.cqrssimple.domain;
 
 public class ItemDeactivatedEvent extends IDomainEvent {
     public ItemDeactivatedEvent(String itemId) {
