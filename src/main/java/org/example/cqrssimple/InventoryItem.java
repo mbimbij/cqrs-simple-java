@@ -1,6 +1,7 @@
 package org.example.cqrssimple;
 
 import java.util.List;
+import java.util.Objects;
 
 public class InventoryItem {
     private final String id;
@@ -41,6 +42,10 @@ public class InventoryItem {
     }
 
     public void rename(String newName, List<IDomainEvent> events) {
+        if (Objects.equals(name, newName)) {
+            return;
+        }
+
         events.add(new ItemRenamedEvent(id, newName));
     }
 }

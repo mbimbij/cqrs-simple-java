@@ -65,7 +65,7 @@ public class InventoryItemShould {
         // THEN
         ItemDeactivatedEvent expectedEvent = new ItemDeactivatedEvent(itemId);
         SoftAssertions.assertSoftly(softAssertions -> {
-            assertThat(events).filteredOn(event -> event instanceof ItemDeactivatedEvent).hasSize(1);
+            softAssertions.assertThat(events).filteredOn(event -> event instanceof ItemDeactivatedEvent).hasSize(1);
             softAssertions.assertThat(events).contains(expectedEvent);
         });
     }
@@ -100,5 +100,14 @@ public class InventoryItemShould {
         // THEN
         ItemRenamedEvent expectedEvent = new ItemRenamedEvent(itemId, newName);
         assertThat(events).contains(expectedEvent);
+    }
+
+    @Test
+    void notProduceEvent_whenRenameItem_butNameHasntChanged() {
+        // WHEN
+        item.rename(itemName, events);
+
+        // THEN
+        assertThat(events).filteredOn(event -> event instanceof ItemRenamedEvent).isEmpty();
     }
 }
