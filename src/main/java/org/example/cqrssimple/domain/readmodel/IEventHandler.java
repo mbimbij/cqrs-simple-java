@@ -1,4 +1,4 @@
-package org.example.cqrssimple.readmodel;
+package org.example.cqrssimple.domain.readmodel;
 
 import org.example.cqrssimple.domain.IDomainEvent;
 
@@ -9,9 +9,9 @@ public abstract class IEventHandler<T extends IDomainEvent> {
         this.acceptedEventType = acceptedEventType;
     }
 
-    abstract void handle(IDomainEvent domainEvent);
+    public abstract void handle(T domainEvent);
 
-    boolean accept(IDomainEvent domainEvent) {
+    public boolean accept(IDomainEvent domainEvent) {
         return acceptedEventType.isAssignableFrom(domainEvent.getClass());
     }
 }

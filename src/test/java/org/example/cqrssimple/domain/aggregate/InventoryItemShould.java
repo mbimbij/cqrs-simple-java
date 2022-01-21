@@ -1,6 +1,12 @@
-package org.example.cqrssimple.domain;
+package org.example.cqrssimple.domain.aggregate;
 
 import org.assertj.core.api.SoftAssertions;
+import org.example.cqrssimple.domain.IDomainEvent;
+import org.example.cqrssimple.domain.ItemCheckedInEvent;
+import org.example.cqrssimple.domain.ItemCreatedEvent;
+import org.example.cqrssimple.domain.ItemDeactivatedEvent;
+import org.example.cqrssimple.domain.ItemRemovedEvent;
+import org.example.cqrssimple.domain.ItemRenamedEvent;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

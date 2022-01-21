@@ -1,6 +1,7 @@
-package org.example.cqrssimple.readmodel;
+package org.example.cqrssimple.domain.readmodel;
 
 import org.example.cqrssimple.domain.IDomainEvent;
+import org.example.cqrssimple.domain.ItemCreatedEvent;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
@@ -66,7 +67,7 @@ class EventHandlerShould {
         }
 
         @Override
-        void handle(IDomainEvent domainEvent) {
+        public void handle(Event1 domainEvent) {
 
         }
     }
@@ -77,7 +78,7 @@ class EventHandlerShould {
         }
 
         @Override
-        void handle(IDomainEvent domainEvent) {
+        public void handle(SubEvent1 domainEvent) {
 
         }
     }
