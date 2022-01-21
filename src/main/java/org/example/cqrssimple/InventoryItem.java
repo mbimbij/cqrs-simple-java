@@ -5,7 +5,6 @@ import java.util.List;
 public class InventoryItem {
     private final String id;
     private final String name;
-    private int quantity = 0;
     private boolean deleted = false;
 
     /*
@@ -25,7 +24,6 @@ public class InventoryItem {
     }
 
     public void checkIn(int checkInQuantity, List<ItemEvent> events) {
-        this.quantity += checkInQuantity;
         events.add(new ItemCheckedInEvent(id, checkInQuantity));
     }
 
