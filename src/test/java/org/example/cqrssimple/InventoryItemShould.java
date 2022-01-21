@@ -14,17 +14,18 @@ public class InventoryItemShould {
     private final String itemName = "item name";
     private String itemId;
     private List<ItemEvent> events;
+    private InventoryItem item;
 
     @BeforeEach
     void setUp() {
         itemId = UUID.randomUUID().toString();
         events = new ArrayList<>();
+        item = new InventoryItem(itemId, itemName, events);
     }
 
     @Test
     void produceItemCreatedEvent_whenCreated() {
-        // WHEN
-        InventoryItem item = new InventoryItem(itemId, itemName, events);
+        // GIVEN item created in setup
 
         // THEN
         ItemCreatedEvent expectedEvent = new ItemCreatedEvent(itemId, itemName);
@@ -34,7 +35,8 @@ public class InventoryItemShould {
     @Test
     void produceItemCreatedEvent_whenCreated_viaFactoryMethod() {
         // WHEN
-        InventoryItem item = InventoryItem.addToCatalog(itemId, itemName, events);
+        ArrayList<ItemEvent> events = new ArrayList<>();
+        InventoryItem.addToCatalog(itemId, itemName, events);
 
         // THEN
         ItemCreatedEvent expectedEvent = new ItemCreatedEvent(itemId, itemName);
@@ -44,7 +46,6 @@ public class InventoryItemShould {
     @Test
     void produceItemCheckedInEvent_whenCheckIn() {
         // GIVEN
-        InventoryItem item = new InventoryItem(itemId, itemName, events);
         int checkInQuantity = 2;
 
         // WHEN
