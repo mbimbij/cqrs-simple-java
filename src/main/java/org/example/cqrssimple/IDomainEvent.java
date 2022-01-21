@@ -8,10 +8,10 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @Getter
 @EqualsAndHashCode
-public class ItemEvent {
+public class IDomainEvent {
     String itemId;
 
-    public ItemEvent(String itemId) {
+    public IDomainEvent(String itemId) {
         this.itemId = itemId;
     }
 }

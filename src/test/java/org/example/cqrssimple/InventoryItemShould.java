@@ -14,7 +14,7 @@ public class InventoryItemShould {
 
     private final String itemName = "item name";
     private String itemId;
-    private List<ItemEvent> events;
+    private List<IDomainEvent> events;
     private InventoryItem item;
 
     @BeforeEach
@@ -36,7 +36,7 @@ public class InventoryItemShould {
     @Test
     void produceItemCreatedEvent_whenCreated_viaFactoryMethod() {
         // WHEN
-        ArrayList<ItemEvent> events = new ArrayList<>();
+        ArrayList<IDomainEvent> events = new ArrayList<>();
         InventoryItem.addToCatalog(itemId, itemName, events);
 
         // THEN

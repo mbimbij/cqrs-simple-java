@@ -5,7 +5,7 @@ import lombok.Value;
 
 @EqualsAndHashCode(callSuper = true)
 @Value
-public class ItemCreatedEvent extends ItemEvent {
+public class ItemCreatedEvent extends IDomainEvent {
     String itemName;
 
     public ItemCreatedEvent(String itemId, String itemName) {
