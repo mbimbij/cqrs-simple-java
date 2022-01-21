@@ -99,15 +99,20 @@ public class InventoryItemShould {
 
         // THEN
         ItemRenamedEvent expectedEvent = new ItemRenamedEvent(itemId, newName);
-        assertThat(events).contains(expectedEvent);
+        SoftAssertions.assertSoftly(softAssertions -> {
+            softAssertions.assertThat(events).contains(expectedEvent);
+        });
     }
 
     @Test
     void notProduceEvent_whenRenameItem_butNameHasntChanged() {
         // WHEN
-        item.rename(itemName, events);
+        String newName = "new name";
+        item.rename(newName, events);
+        item.rename(newName, events);
 
         // THEN
-        assertThat(events).filteredOn(event -> event instanceof ItemRenamedEvent).isEmpty();
+        assertThat(events).filteredOn(event -> event instanceof ItemRenamedEvent)
+                          .containsExactly(new ItemRenamedEvent(itemId, newName));
     }
 }
