@@ -18,11 +18,14 @@ class ReadFacadeShould {
 
     private InMemoryFakeReadDatabase readDatabase;
     private ReadFacade readFacade;
+    private InMemorySynchronousEventBus eventBus;
 
     @BeforeEach
     void setUp() {
         readDatabase = new InMemoryFakeReadDatabase();
         readFacade = new ReadFacade(readDatabase);
+        eventBus = new InMemorySynchronousEventBus();
+        eventBus.subscribe( new ItemCreatedItemListHandler(readDatabase));
     }
 
     @Test
@@ -39,11 +42,6 @@ class ReadFacadeShould {
     @Test
     void return2Items_whenGetItemList_and2ItemsCreated() {
         // GIVEN
-        InMemoryFakeReadDatabase readDatabase = new InMemoryFakeReadDatabase();
-        ItemCreatedItemListHandler itemCreatedHandler = new ItemCreatedItemListHandler(readDatabase);
-        InMemorySynchronousEventBus eventBus = new InMemorySynchronousEventBus();
-        eventBus.subscribe(itemCreatedHandler);
-
         String item1 = "item1";
         String item2 = "item2";
 
