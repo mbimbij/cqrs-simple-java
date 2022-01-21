@@ -42,4 +42,4 @@ build/
 !.elasticbeanstalk/*.global.yml
 
 # Gradle
-.gradle
+.gradle/
