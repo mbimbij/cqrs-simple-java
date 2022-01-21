@@ -65,4 +65,15 @@ public class InventoryItemShould {
         ItemDeletedEvent expectedEvent = new ItemDeletedEvent(itemId);
         assertThat(events).contains(expectedEvent);
     }
+
+    @Test
+    void notProduceEvent_whenDelete_andItemAlreadyDeleted() {
+        // WHEN
+        item.delete(events);
+        item.delete(events);
+
+        // THEN
+        ItemDeletedEvent expectedEvent = new ItemDeletedEvent(itemId);
+        assertThat(events).filteredOn(event -> event instanceof ItemDeletedEvent).hasSize(1);
+    }
 }

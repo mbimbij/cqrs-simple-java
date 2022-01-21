@@ -6,6 +6,7 @@ public class InventoryItem {
     private final String id;
     private final String name;
     private int quantity = 0;
+    private boolean deleted = false;
 
     /*
     Alternative #1 -> création via constructeur
@@ -29,6 +30,11 @@ public class InventoryItem {
     }
 
     public void delete(List<ItemEvent> events) {
+        if (deleted) {
+            return;
+        }
+
+        deleted = true;
         events.add(new ItemDeletedEvent(id));
     }
 }
