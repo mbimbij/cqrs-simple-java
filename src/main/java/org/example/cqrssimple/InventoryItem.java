@@ -43,4 +43,8 @@ public class InventoryItem {
     public void rename(String newName, List<IDomainEvent> events) {
         events.add(new ItemRenamedEvent(id, newName));
     }
+
+    public void deactivate(List<IDomainEvent> events) {
+        events.add(new ItemDeactivatedEvent(id));
+    }
 }

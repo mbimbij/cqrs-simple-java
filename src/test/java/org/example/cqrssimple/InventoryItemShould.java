@@ -102,4 +102,14 @@ public class InventoryItemShould {
         ItemRenamedEvent expectedEvent = new ItemRenamedEvent(itemId, newName);
         assertThat(events).contains(expectedEvent);
     }
+
+    @Test
+    void produceItemDeactivatedEvent_whenDeactivateItem() {
+        // WHEN
+        item.deactivate(events);
+
+        // THEN
+        ItemDeactivatedEvent expectedEvent = new ItemDeactivatedEvent(itemId);
+        assertThat(events).contains(expectedEvent);
+    }
 }
