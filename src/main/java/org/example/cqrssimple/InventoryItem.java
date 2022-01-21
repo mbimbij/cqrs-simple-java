@@ -27,13 +27,13 @@ public class InventoryItem {
         events.add(new ItemCheckedInEvent(id, checkInQuantity));
     }
 
-    public void delete(List<IDomainEvent> events) {
+    public void deactivate(List<IDomainEvent> events) {
         if (deleted) {
             return;
         }
 
         deleted = true;
-        events.add(new ItemDeletedEvent(id));
+        events.add(new ItemDeactivatedEvent(id));
     }
 
     public void remove(int quantity, List<IDomainEvent> events) {
@@ -42,9 +42,5 @@ public class InventoryItem {
 
     public void rename(String newName, List<IDomainEvent> events) {
         events.add(new ItemRenamedEvent(id, newName));
-    }
-
-    public void deactivate(List<IDomainEvent> events) {
-        events.add(new ItemDeactivatedEvent(id));
     }
 }

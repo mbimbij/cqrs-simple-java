@@ -58,27 +58,26 @@ public class InventoryItemShould {
     }
 
     @Test
-    void produceItemDeletedEvent_whenDelete() {
+    void produceItemDeactivatedEvent_whenDeactivate() {
         // WHEN
-        item.delete(events);
+        item.deactivate(events);
 
         // THEN
-        ItemDeletedEvent expectedEvent = new ItemDeletedEvent(itemId);
+        ItemDeactivatedEvent expectedEvent = new ItemDeactivatedEvent(itemId);
         SoftAssertions.assertSoftly(softAssertions -> {
-            assertThat(events).filteredOn(event -> event instanceof ItemDeletedEvent).hasSize(1);
+            assertThat(events).filteredOn(event -> event instanceof ItemDeactivatedEvent).hasSize(1);
             softAssertions.assertThat(events).contains(expectedEvent);
         });
     }
 
     @Test
-    void notProduceEvent_whenDelete_andItemAlreadyDeleted() {
+    void notProduceEvent_whenDeactivate_andItemAlreadyDeactivated() {
         // WHEN
-        item.delete(events);
-        item.delete(events);
+        item.deactivate(events);
+        item.deactivate(events);
 
         // THEN
-        ItemDeletedEvent expectedEvent = new ItemDeletedEvent(itemId);
-        assertThat(events).filteredOn(event -> event instanceof ItemDeletedEvent).hasSize(1);
+        assertThat(events).filteredOn(event -> event instanceof ItemDeactivatedEvent).hasSize(1);
     }
 
     @Test
@@ -100,16 +99,6 @@ public class InventoryItemShould {
 
         // THEN
         ItemRenamedEvent expectedEvent = new ItemRenamedEvent(itemId, newName);
-        assertThat(events).contains(expectedEvent);
-    }
-
-    @Test
-    void produceItemDeactivatedEvent_whenDeactivateItem() {
-        // WHEN
-        item.deactivate(events);
-
-        // THEN
-        ItemDeactivatedEvent expectedEvent = new ItemDeactivatedEvent(itemId);
         assertThat(events).contains(expectedEvent);
     }
 }
