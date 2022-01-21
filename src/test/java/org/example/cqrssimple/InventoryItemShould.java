@@ -52,6 +52,17 @@ public class InventoryItemShould {
         item.checkIn(checkInQuantity, events);
 
         // THEN
-        assertThat(events).contains(new ItemCheckedInEvent(itemId, checkInQuantity));
+        ItemCheckedInEvent expectedEvent = new ItemCheckedInEvent(itemId, checkInQuantity);
+        assertThat(events).contains(expectedEvent);
+    }
+
+    @Test
+    void produceItemDeletedEvent_whenDelete() {
+        // WHEN
+        item.delete(events);
+
+        // THEN
+        ItemDeletedEvent expectedEvent = new ItemDeletedEvent(itemId);
+        assertThat(events).contains(expectedEvent);
     }
 }

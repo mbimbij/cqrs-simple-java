@@ -27,4 +27,8 @@ public class InventoryItem {
         this.quantity += checkInQuantity;
         events.add(new ItemCheckedInEvent(id, checkInQuantity));
     }
+
+    public void delete(List<ItemEvent> events) {
+        events.add(new ItemDeletedEvent(id));
+    }
 }
