@@ -91,4 +91,15 @@ public class InventoryItemShould {
         ItemRemovedEvent expectedEvent = new ItemRemovedEvent(itemId, quantity);
         assertThat(events).contains(expectedEvent);
     }
+
+    @Test
+    void produceItemRenamedEvent_whenRenameItem() {
+        // WHEN
+        String newName = "new name";
+        item.rename(newName, events);
+
+        // THEN
+        ItemRenamedEvent expectedEvent = new ItemRenamedEvent(itemId, newName);
+        assertThat(events).contains(expectedEvent);
+    }
 }

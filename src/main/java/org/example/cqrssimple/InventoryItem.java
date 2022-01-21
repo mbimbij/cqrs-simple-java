@@ -39,4 +39,8 @@ public class InventoryItem {
     public void remove(int quantity, List<ItemEvent> events) {
         events.add(new ItemRemovedEvent(id, quantity));
     }
+
+    public void rename(String newName, List<ItemEvent> events) {
+        events.add(new ItemRenamedEvent(id, newName));
+    }
 }
