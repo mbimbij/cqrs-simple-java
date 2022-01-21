@@ -5,6 +5,7 @@ import java.util.List;
 public class InventoryItem {
     private final String id;
     private final String name;
+    private int quantity = 0;
 
     /*
     Alternative #1 -> création via constructeur
@@ -20,5 +21,10 @@ public class InventoryItem {
      */
     public static InventoryItem addToCatalog(String id, String name, List<ItemEvent> events) {
         return new InventoryItem(id, name, events);
+    }
+
+    public void checkIn(int checkInQuantity, List<ItemEvent> events) {
+        this.quantity += checkInQuantity;
+        events.add(new ItemCheckedInEvent(id, checkInQuantity));
     }
 }
