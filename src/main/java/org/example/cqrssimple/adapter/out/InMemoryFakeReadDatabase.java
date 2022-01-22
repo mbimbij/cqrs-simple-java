@@ -2,6 +2,7 @@ package org.example.cqrssimple.adapter.out;
 
 import org.example.cqrssimple.domain.IReadDatabase;
 import org.example.cqrssimple.domain.ItemCreatedEvent;
+import org.example.cqrssimple.domain.ItemDeactivatedEvent;
 import org.example.cqrssimple.domain.ItemRenamedEvent;
 import org.example.cqrssimple.domain.readmodel.ItemListView;
 import org.example.cqrssimple.domain.readmodel.SingleItemForList;
@@ -18,20 +19,21 @@ public class InMemoryFakeReadDatabase implements IReadDatabase {
     }
 
     @Override
-    public void handle(ItemCreatedEvent itemCreatedEvent) {
-        String itemId = itemCreatedEvent.getItemId();
-        items.put(itemId, new SingleItemForList(itemId, itemCreatedEvent.getItemName()));
+    public void handle(ItemCreatedEvent event) {
+        String itemId = event.getItemId();
+        items.put(itemId, new SingleItemForList(itemId, event.getItemName()));
     }
 
     @Override
-    public void handle(ItemRenamedEvent domainEvent) {
-        String itemId = domainEvent.getItemId();
+    public void handle(ItemRenamedEvent event) {
+        String itemId = event.getItemId();
         items.remove(itemId);
-        items.put(itemId, new SingleItemForList(itemId, domainEvent.getNewName()));
+        items.put(itemId, new SingleItemForList(itemId, event.getNewName()));
     }
 
     @Override
-    public void deactivate(String itemId) {
-        items.remove(itemId);
+    public void handle(ItemDeactivatedEvent event) {
+        items.remove(event.getItemId());
     }
+
 }

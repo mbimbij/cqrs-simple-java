@@ -9,5 +9,5 @@ public interface IReadDatabase {
 
     void handle(ItemRenamedEvent domainEvent);
 
-    void deactivate(String itemId);
+    void handle(ItemDeactivatedEvent itemId);
 }
