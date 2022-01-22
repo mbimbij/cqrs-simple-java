@@ -7,5 +7,7 @@ public interface IReadDatabase {
 
     void handle(ItemCreatedEvent itemCreatedEvent);
 
+    void handle(ItemRenamedEvent domainEvent);
+
     void deactivate(String itemId);
 }

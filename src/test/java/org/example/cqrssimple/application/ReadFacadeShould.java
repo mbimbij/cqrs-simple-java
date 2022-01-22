@@ -4,15 +4,18 @@ import org.example.cqrssimple.adapter.out.InMemoryFakeReadDatabase;
 import org.example.cqrssimple.adapter.out.InMemorySynchronousEventBus;
 import org.example.cqrssimple.domain.ItemCreatedEvent;
 import org.example.cqrssimple.domain.ItemDeactivatedEvent;
+import org.example.cqrssimple.domain.ItemRenamedEvent;
 import org.example.cqrssimple.domain.readmodel.ItemCreatedItemListHandler;
-import org.example.cqrssimple.domain.readmodel.ItemListView;
-import org.example.cqrssimple.domain.readmodel.SingleItemForList;
 import org.example.cqrssimple.domain.readmodel.ItemDeactivatedItemListHandler;
+import org.example.cqrssimple.domain.readmodel.ItemListView;
+import org.example.cqrssimple.domain.readmodel.ItemRenamedItemListHandler;
+import org.example.cqrssimple.domain.readmodel.SingleItemForList;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.UUID;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -29,6 +32,7 @@ class ReadFacadeShould {
         eventBus = new InMemorySynchronousEventBus();
         eventBus.subscribe(new ItemCreatedItemListHandler(readDatabase));
         eventBus.subscribe(new ItemDeactivatedItemListHandler(readDatabase));
+        eventBus.subscribe(new ItemRenamedItemListHandler(readDatabase));
     }
 
     @Test
@@ -76,6 +80,24 @@ class ReadFacadeShould {
 
         // THEN
         ItemListView expectedItemListView = new ItemListView(List.of(new SingleItemForList(item2, item2)));
+        assertThat(itemListView).usingRecursiveComparison()
+                                .isEqualTo(expectedItemListView);
+    }
+
+    @Test
+    void handleItemRenaming() {
+        // GIVEN
+        String itemId = UUID.randomUUID().toString();
+        String newName = "new name";
+
+        eventBus.send(List.of(new ItemCreatedEvent(itemId, "name"),
+                              new ItemRenamedEvent(itemId, newName)));
+
+        // WHEN
+        ItemListView itemListView = readFacade.getItemList();
+
+        // THEN
+        ItemListView expectedItemListView = new ItemListView(List.of(new SingleItemForList(itemId, newName)));
         assertThat(itemListView).usingRecursiveComparison()
                                 .isEqualTo(expectedItemListView);
     }
