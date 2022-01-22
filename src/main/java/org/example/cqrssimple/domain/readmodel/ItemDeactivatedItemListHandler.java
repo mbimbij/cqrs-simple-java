@@ -1,12 +1,12 @@
 package org.example.cqrssimple.domain.readmodel;
 
-import org.example.cqrssimple.adapter.out.InMemoryFakeReadDatabase;
+import org.example.cqrssimple.adapter.out.InMemoryFakeReadDatabaseItemList;
 import org.example.cqrssimple.domain.ItemDeactivatedEvent;
 
 public class ItemDeactivatedItemListHandler extends IEventHandler<ItemDeactivatedEvent> {
-    private InMemoryFakeReadDatabase readDatabase;
+    private InMemoryFakeReadDatabaseItemList readDatabase;
 
-    public ItemDeactivatedItemListHandler(InMemoryFakeReadDatabase readDatabase) {
+    public ItemDeactivatedItemListHandler(InMemoryFakeReadDatabaseItemList readDatabase) {
         super(ItemDeactivatedEvent.class);
         this.readDatabase = readDatabase;
     }

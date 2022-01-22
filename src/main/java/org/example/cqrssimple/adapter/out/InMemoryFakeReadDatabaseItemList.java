@@ -1,6 +1,6 @@
 package org.example.cqrssimple.adapter.out;
 
-import org.example.cqrssimple.domain.IReadDatabase;
+import org.example.cqrssimple.domain.IReadDatabaseItemList;
 import org.example.cqrssimple.domain.ItemCreatedEvent;
 import org.example.cqrssimple.domain.ItemDeactivatedEvent;
 import org.example.cqrssimple.domain.ItemRenamedEvent;
@@ -10,7 +10,7 @@ import org.example.cqrssimple.domain.readmodel.SingleItemForList;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-public class InMemoryFakeReadDatabase implements IReadDatabase {
+public class InMemoryFakeReadDatabaseItemList implements IReadDatabaseItemList {
     private final SortedMap<String, SingleItemForList> items = new TreeMap<>();
 
     @Override

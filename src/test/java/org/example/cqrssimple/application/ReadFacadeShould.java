@@ -1,6 +1,6 @@
 package org.example.cqrssimple.application;
 
-import org.example.cqrssimple.adapter.out.InMemoryFakeReadDatabase;
+import org.example.cqrssimple.adapter.out.InMemoryFakeReadDatabaseItemList;
 import org.example.cqrssimple.adapter.out.InMemorySynchronousEventBus;
 import org.example.cqrssimple.domain.ItemCreatedEvent;
 import org.example.cqrssimple.domain.ItemDeactivatedEvent;
@@ -21,13 +21,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class ReadFacadeShould {
 
-    private InMemoryFakeReadDatabase readDatabase;
+    private InMemoryFakeReadDatabaseItemList readDatabase;
     private ReadFacade readFacade;
     private InMemorySynchronousEventBus eventBus;
 
     @BeforeEach
     void setUp() {
-        readDatabase = new InMemoryFakeReadDatabase();
+        readDatabase = new InMemoryFakeReadDatabaseItemList();
         readFacade = new ReadFacade(readDatabase);
         eventBus = new InMemorySynchronousEventBus();
         eventBus.subscribe(new ItemCreatedItemListHandler(readDatabase));

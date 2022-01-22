@@ -2,7 +2,7 @@ package org.example.cqrssimple.domain;
 
 import org.example.cqrssimple.domain.readmodel.ItemListView;
 
-public interface IReadDatabase {
+public interface IReadDatabaseItemList {
     ItemListView getItemList();
 
     void handle(ItemCreatedEvent itemCreatedEvent);
