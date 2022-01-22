@@ -1,9 +1,9 @@
 package org.example.cqrssimple.adapter.out;
 
-import org.example.cqrssimple.domain.IReadDatabaseItemList;
-import org.example.cqrssimple.domain.ItemCreatedEvent;
-import org.example.cqrssimple.domain.ItemDeactivatedEvent;
-import org.example.cqrssimple.domain.ItemRenamedEvent;
+import org.example.cqrssimple.domain.event.IReadDatabaseItemList;
+import org.example.cqrssimple.domain.event.ItemCreatedEvent;
+import org.example.cqrssimple.domain.event.ItemDeactivatedEvent;
+import org.example.cqrssimple.domain.event.ItemRenamedEvent;
 import org.example.cqrssimple.domain.readmodel.ItemListView;
 import org.example.cqrssimple.domain.readmodel.SingleItemForList;
 

@@ -1,4 +1,4 @@
-package org.example.cqrssimple.domain;
+package org.example.cqrssimple.domain.event;
 
 import org.example.cqrssimple.domain.readmodel.ItemListView;
 

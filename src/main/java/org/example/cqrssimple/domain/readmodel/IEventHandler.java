@@ -1,6 +1,6 @@
 package org.example.cqrssimple.domain.readmodel;
 
-import org.example.cqrssimple.domain.IDomainEvent;
+import org.example.cqrssimple.domain.event.IDomainEvent;
 
 public abstract class IEventHandler<T extends IDomainEvent> {
     private final Class<T> acceptedEventType;

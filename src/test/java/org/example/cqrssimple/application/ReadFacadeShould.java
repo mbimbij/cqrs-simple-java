@@ -2,9 +2,9 @@ package org.example.cqrssimple.application;
 
 import org.example.cqrssimple.adapter.out.InMemoryFakeReadDatabaseItemList;
 import org.example.cqrssimple.adapter.out.InMemorySynchronousEventBus;
-import org.example.cqrssimple.domain.ItemCreatedEvent;
-import org.example.cqrssimple.domain.ItemDeactivatedEvent;
-import org.example.cqrssimple.domain.ItemRenamedEvent;
+import org.example.cqrssimple.domain.event.ItemCreatedEvent;
+import org.example.cqrssimple.domain.event.ItemDeactivatedEvent;
+import org.example.cqrssimple.domain.event.ItemRenamedEvent;
 import org.example.cqrssimple.domain.readmodel.ItemCreatedItemListHandler;
 import org.example.cqrssimple.domain.readmodel.ItemDeactivatedItemListHandler;
 import org.example.cqrssimple.domain.readmodel.ItemListView;

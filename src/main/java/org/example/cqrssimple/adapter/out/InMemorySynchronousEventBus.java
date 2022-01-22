@@ -1,7 +1,7 @@
 package org.example.cqrssimple.adapter.out;
 
-import org.example.cqrssimple.domain.IDomainEvent;
-import org.example.cqrssimple.domain.IEventBus;
+import org.example.cqrssimple.domain.event.IDomainEvent;
+import org.example.cqrssimple.domain.event.IEventBus;
 import org.example.cqrssimple.domain.readmodel.IEventHandler;
 
 import java.util.ArrayList;

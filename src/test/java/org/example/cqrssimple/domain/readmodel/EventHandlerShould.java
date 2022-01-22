@@ -1,7 +1,6 @@
 package org.example.cqrssimple.domain.readmodel;
 
-import org.example.cqrssimple.domain.IDomainEvent;
-import org.example.cqrssimple.domain.ItemCreatedEvent;
+import org.example.cqrssimple.domain.event.IDomainEvent;
 import org.junit.jupiter.api.Test;
 
 import java.util.UUID;

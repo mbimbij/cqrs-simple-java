@@ -1,7 +1,7 @@
 package org.example.cqrssimple.domain.readmodel;
 
-import org.example.cqrssimple.domain.IReadDatabaseItemList;
-import org.example.cqrssimple.domain.ItemRenamedEvent;
+import org.example.cqrssimple.domain.event.IReadDatabaseItemList;
+import org.example.cqrssimple.domain.event.ItemRenamedEvent;
 
 public class ItemRenamedItemListHandler extends IEventHandler<ItemRenamedEvent> {
     private final IReadDatabaseItemList readDatabase;
