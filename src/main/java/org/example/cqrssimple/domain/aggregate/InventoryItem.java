@@ -7,6 +7,7 @@ import org.example.cqrssimple.domain.event.ItemDeactivatedEvent;
 import org.example.cqrssimple.domain.event.ItemRemovedEvent;
 import org.example.cqrssimple.domain.event.ItemRenamedEvent;
 
+import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
@@ -15,9 +16,12 @@ public class InventoryItem {
     private String name;
     private boolean deactivated = false;
 
+    private InventoryItem() {
+    }
+
     /*
-    Alternative #1 -> création via constructeur
-     */
+        Alternative #1 -> création via constructeur
+         */
     public InventoryItem(String id, String name, List<IDomainEvent> events) {
         ItemCreatedEvent event = new ItemCreatedEvent(id, name);
         apply(event);
@@ -29,6 +33,20 @@ public class InventoryItem {
      */
     public static InventoryItem addToCatalog(String id, String name, List<IDomainEvent> events) {
         return new InventoryItem(id, name, events);
+    }
+
+    public static InventoryItem buildFromHistory(Collection<IDomainEvent> events) {
+        InventoryItem item = new InventoryItem();
+        events.forEach(evt -> {
+            if(evt instanceof ItemCreatedEvent event){
+                item.apply(event);
+            }else if(evt instanceof ItemRenamedEvent event){
+                item.apply(event);
+            }else if(evt instanceof ItemDeactivatedEvent event){
+                item.apply(event);
+            }
+        });
+        return item;
     }
 
     public void checkIn(int checkInQuantity, List<IDomainEvent> events) {
