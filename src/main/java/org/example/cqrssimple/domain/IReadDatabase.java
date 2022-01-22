@@ -6,4 +6,6 @@ public interface IReadDatabase {
     ItemListView getItemList();
 
     void handle(ItemCreatedEvent itemCreatedEvent);
+
+    void deactivate(String itemId);
 }
